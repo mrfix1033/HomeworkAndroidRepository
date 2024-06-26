@@ -19,7 +19,7 @@ public class Exceptions {
      * @param number that is divisible by 2
      * @throws ArithmeticException if number is uneven
      */
-    public static int divideBy2(int number) {
+    public static int divideBy2(int number) throws ArithmeticException {
         if ((number & 1) == 1) throw new ArithmeticException("Number " + number + " is uneven");
         return number / 2;
     }
