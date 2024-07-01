@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +28,11 @@ public class Enums {
     }
 
     static List<Person> filterPersonsByGender(List<Person> people, Gender gender) {
-        return people.stream().filter(person -> person.gender() == gender).toList();
+        List<Person> toReturn = new ArrayList<>();
+        people.forEach(person -> {
+            if (person.gender() == gender) toReturn.add(person);
+        });
+        return toReturn;
     }
 
     static int getOrdinalLetter(Alphabet letter) {
