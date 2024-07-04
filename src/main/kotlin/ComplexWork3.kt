@@ -1,7 +1,7 @@
 fun main() {
-    var n = 1
+    var n = 3
     var number = 0.0
-    for (i in 1..n) number += 1 / i
+    for (i in 1..n) number += 1.0 / i
 
     println("1) $number")
 
