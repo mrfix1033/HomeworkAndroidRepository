@@ -41,7 +41,9 @@ fun main() {
         IntArray(6),
         IntArray(6),
         IntArray(6),
-        IntArray(6)
+        IntArray(6),
+        IntArray(6),
+        IntArray(6),
     )
     makeMatrixOfBeautifulOnes(myArray3)
     makeMatrixOfBeautifulOnes(myArray31)
@@ -73,9 +75,9 @@ fun calculateMedian(matrix: Array<Array<Int>>): Double {
 }
 
 fun makeMatrixOfBeautifulOnes(matrix: Array<IntArray>) {
-    for ((delta, i) in (matrix.size / 2..<matrix.size).withIndex())
-        for (j in (matrix.size - 1) / 2 - delta..matrix.size / 2 + delta)
-            matrix[i][j] = 1
+    for (delta in 0..(matrix[0].size - 1) / 2)
+        for (j in delta..<matrix[0].size - delta)
+            matrix[matrix.size - 1 - delta][j] = 1
 }
 
 fun printMatrix(matrix: Array<IntArray>) {
