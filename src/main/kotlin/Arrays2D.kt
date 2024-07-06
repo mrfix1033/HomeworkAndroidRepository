@@ -17,7 +17,16 @@ fun main() {
         arrayOf(3, 6, 13),
         arrayOf(4, 5, 14)
     )
-    println("2) Median in ${myArray2.contentDeepToString()} is ${myArray2[myArray2.size / 2][myArray2[0].size / 2]}")
+    var myArray21 = arrayOf(
+        arrayOf(0, 9, 10, 15),
+        arrayOf(1, 8, 11, 16),
+        arrayOf(2, 7, 12, 17),
+        arrayOf(3, 6, 13, 18),
+        arrayOf(4, 5, 14, 19),
+        arrayOf(6, 7, 9, 20)
+    )
+    println("2) Median in ${myArray2.contentDeepToString()} is ${calculateMedian(myArray2)}")
+    println("2) Median in ${myArray21.contentDeepToString()} is ${calculateMedian(myArray21)}")
 
     var myArray3 = arrayOf(
         IntArray(5),
@@ -26,14 +35,19 @@ fun main() {
         IntArray(5),
         IntArray(5)
     )
-    for (i in 0..2)
-        for (j in myArray3.size / 2 - i..myArray3.size / 2 + i)
-            myArray3[i+2][j] = 1
-    println("3) Array is:")
-    for (innerArray in myArray3) {
-        for (e in innerArray)
-            print("$e ")
-        println()
+    var myArray31 = arrayOf(
+        IntArray(6),
+        IntArray(6),
+        IntArray(6),
+        IntArray(6),
+        IntArray(6),
+        IntArray(6)
+    )
+    makeMatrixOfBeautifulOnes(myArray3)
+    makeMatrixOfBeautifulOnes(myArray31)
+    for (array in arrayOf(myArray3, myArray31)) {
+        println("3) Array is:")
+        printMatrix(array)
     }
 
     var myArray4 = arrayOf(1, 2, 3, 4, 5, 6)
@@ -45,4 +59,29 @@ fun main() {
             max = e
         }
     println("4) Pre-maximum is $preMax")
+}
+
+fun calculateMedian(matrix: Array<Array<Int>>): Double {
+    var countNumbers = 0
+    var sum = 0.0
+    for (i in (matrix.size - 1) / 2..matrix.size.or(1) / 2)
+        for (j in (matrix[0].size - 1) / 2..matrix[0].size.or(1) / 2) {
+            sum += matrix[i][j]
+            countNumbers++
+        }
+    return sum / countNumbers
+}
+
+fun makeMatrixOfBeautifulOnes(matrix: Array<IntArray>) {
+    for ((delta, i) in (matrix.size / 2..<matrix.size).withIndex())
+        for (j in (matrix.size - 1) / 2 - delta..matrix.size / 2 + delta)
+            matrix[i][j] = 1
+}
+
+fun printMatrix(matrix: Array<IntArray>) {
+    for (innerArray in matrix) {
+        for (e in innerArray)
+            print("$e ")
+        println()
+    }
 }
