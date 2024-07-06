@@ -23,7 +23,7 @@ fun main() {
         arrayOf(2, 7, 12, 17),
         arrayOf(3, 6, 13, 18),
         arrayOf(4, 5, 14, 19),
-        arrayOf(6, 7, 9, 20)
+        arrayOf(6, 7, 12, 20)
     )
     println("2) Median in ${myArray2.contentDeepToString()} is ${calculateMedian(myArray2)}")
     println("2) Median in ${myArray21.contentDeepToString()} is ${calculateMedian(myArray21)}")
