@@ -1,3 +1,5 @@
+package module5
+
 const val additionPartPrefix = "  "
 
 class HumanNestedClasses(weight: Double) : WeightPrintable(weight) {

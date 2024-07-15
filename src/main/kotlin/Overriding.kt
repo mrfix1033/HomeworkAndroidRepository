@@ -36,6 +36,8 @@ fun main() {
     println("В массиве ${arrayStrings.contentToString()} самая длинная строка - $longestString, её длина ${longestString.length}")
 
     val string = "ПриВет, кАк деЛа"
-    val countUpperChars = string.count { c -> c.isUpperCase() }
-    println("В строке \"$string\" символов в верхнем регистре - $countUpperChars")
+//    val upperChars = string.filter { c -> c.isUpperCase() }
+    var upperChars = arrayOf<Char>()
+    for (char in string) if (char.isUpperCase()) upperChars += char
+    println("В строке \"$string\" символы в верхнем регистре - ${upperChars.joinToString()}; их количество - ${upperChars.size}")
 }
