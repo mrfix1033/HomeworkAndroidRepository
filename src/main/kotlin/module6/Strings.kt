@@ -19,9 +19,5 @@ fun main() {
     taskString.reversed().forEach(::println)
 
     val magicString = "kotlin2023course"
-    magicString.count(Char::isDigit)
+    println("Количество цифр в строке \"$magicString\" = ${magicString.count(Char::isDigit)}")
 }
-
-//2. Нужно осуществить проверку номера телефона. Он должен начинаться с +7 и содержать 10 цифр, не считая +7. Если телефон верно введен, выведите true, иначе false.
-//3. Дана строка. Вывести символы, составляющие эту строку, но в обратном порядке.
-//4. Дана строка «kotlin2023course». Подсчитать количество содержащихся в ней цифр.
