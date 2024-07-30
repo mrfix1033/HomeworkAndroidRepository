@@ -24,8 +24,8 @@ fun main() {
 data class PersonExceptions(val name: String, val surname: String)
 
 fun createList(list: Array<PersonExceptions?>) {
-    val name = Utils.input("Введите имя: ")
-    val surname = Utils.input("Введите фамилию: ")
+    val name = Utils.throwIfEmpty(Utils.input("Введите имя: "), "Имя не может быть пустым")
+    val surname = Utils.throwIfEmpty(Utils.input("Введите фамилию: "), "Фамилия не может быть пустой")
     val person = PersonExceptions(name, surname)
     val intIndex = Utils.toIntOrThrow(Utils.input("Введите индекс, куда поместить человека: "))
     Utils.setElementByIndexOrThrow(list, person, intIndex)
@@ -46,11 +46,17 @@ class Utils {
         fun <T> setElementByIndexOrThrow(list: Array<T>, element: T, index: Int) {
             if (index < 0 || index >= list.size) throw IndexOutOfBound("Индекс $index за границей массива размером ${list.size}")
             list[index] = element
+            list.isEmpty()
         }
 
         fun input(askString: String): String {
             println(askString)
             return readln()
+        }
+
+        fun throwIfEmpty(string: String, descriptionIfThrow: String): String {
+            if (string.isEmpty()) throw EmptyStringException(descriptionIfThrow)
+            return string
         }
     }
 }
@@ -62,3 +68,5 @@ open class MyException(val description: String) : Exception() {
 class NumberFormatExceptionWrapper(description: String) : MyException(description)
 
 class IndexOutOfBound(description: String) : MyException(description)
+
+class EmptyStringException(description: String) : MyException(description)
