@@ -1,7 +1,5 @@
 package module6
 
-import kotlin.math.abs
-
 fun main() {
     printFavoriteBook("Пентестинг на Android")
     printFavoriteBook(null)
@@ -20,12 +18,6 @@ fun printFavoriteBook(bookName: String?) {
     println(bookName ?: "Нет любимой книги")
 }
 
-fun DivideIfWhole(a: Int, b: Int): Int? {  // getNumberOfMultipliers - думаю подошло бы лучше)
-    var ad = a  // a divisible
-    var count = 0
-    while (ad % b == 0 && abs(ad) != 1) {
-        count++
-        ad /= b
-    }
-    return if (ad == 1) count else null
+fun DivideIfWhole(a: Int, b: Int): Int? {
+    return if (a % b == 0) a / b else null
 }
