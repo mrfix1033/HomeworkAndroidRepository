@@ -19,17 +19,19 @@ fun main() {
 }
 
 fun openDeleteMenu(map: MutableMap<Int, String>) {
-    val reversedMap = map.entries.associateBy({ it.value }) { it.key }.toMutableMap()
+    val reversedMap = mutableMapOf<String, MutableSet<Int>>()
+    map.forEach { (k, v) -> reversedMap[v] = reversedMap.getOrElse(v) { mutableSetOf() }.apply { add(k) } }
+
     while (true) {
         println("Карта: $map")
         println("Введите ЗНАЧЕНИЕ, которое вы хотите удалить или пустую строку для выхода: ")
         val input = readln()
         if (input.isEmpty()) break
-        val key = reversedMap.remove(input)
-        if (key == null) println("Такого значения нет.")
+        val keys = reversedMap.remove(input)
+        if (keys == null) println("Такого значения нет.")
         else {
-            map.remove(key)
-            println("Ключ $key и значение $input удалены")
+            keys.forEach(map::remove)
+            println("Ключ${if (keys.size > 1) "и" else ""} ${keys.joinToString()} и значение $input удалены")
         }
     }
 }
