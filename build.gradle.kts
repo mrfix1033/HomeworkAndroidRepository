@@ -13,6 +13,10 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+
+    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core-jvm
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0")
+
 }
 
 tasks {
