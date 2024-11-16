@@ -48,8 +48,7 @@ suspend fun main() {
                 println("Конец")
             }
         }.join()
-        val personsAndPhones = MutableList(persons.size * 2)
-        { if (it % 2 == 0) personsCoroutine[it / 2].toString() else phones[it / 2] }
+        val personsAndPhones = personsCoroutine.zip(phones)
         println(personsAndPhones)
     }
 }
