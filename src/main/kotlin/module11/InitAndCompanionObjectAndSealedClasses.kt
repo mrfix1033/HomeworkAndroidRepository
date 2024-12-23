@@ -8,7 +8,7 @@ fun input(text: String) = run {
 }
 
 fun inputInt(text: String) = run {
-    var ret = ""
+    var ret: String
     do {
         ret = input(text)
     } while (ret.toIntOrNull() == null)
@@ -23,50 +23,83 @@ fun inputFloat(text: String) = run {
     ret.toFloat()
 }
 
-class Component(val name: String)
+class Component(val name: String) {
+    override fun toString() = name
+}
 
-private val milkComponent = Component("Молоко")
+private val milkComponent = Component("молоко")
 
 sealed class Coffee(
     val sugar: Int,
     val volume: Float,
-    val additionalComponents: List<Component> = emptyList()
+    val components: Map<Component, Any> = emptyMap()
 ) {
-    class Americano(sugar: Int, volume: Float) : Coffee(sugar, volume)
-    class Cappuccino(sugar: Int, volume: Float, milkVolume: Float) :
-        Coffee( sugar, volume, listOf(milkComponent)) {
+    abstract val name: String
 
+    class Americano(sugar: Int, volume: Float) : Coffee(sugar, volume) {
+        companion object {
+            const val name = "Американо"
         }
 
-    class Latte(sugar: Int, volume: Float) : Coffee( sugar, volume)
-    fun handleAdditionalComponents() {
-        return inputFloat("Количество молока: ")
+        override val name: String
+            get() = Americano.name
+    }
+
+    class Cappuccino(sugar: Int, volume: Float, milkVolume: Float) :
+        Coffee(sugar, volume, mapOf(Pair(milkComponent, milkVolume))) {
+        companion object {
+            const val name = "Капучино"
+        }
+
+        override val name: String
+            get() = Cappuccino.name
+    }
+
+    class Latte(sugar: Int, volume: Float) : Coffee(sugar, volume) {
+        companion object {
+            const val name = "Латте"
+        }
+
+        override val name: String
+            get() = Latte.name
     }
 }
 
 suspend fun main() {
-
-    val coffeeAssortment: Map<String, Coffee> = mapOf(
-        Pair("Американо", Coffee.Americano)
-    )
-//    ,
-//    Pair("Капучино", Coffee.Cappuccino),
-//    Pair("Латте", Coffee.Latte)
 
     suspend fun SelectMenu(coffee: Coffee) {
         for (i in 0..100 step 10) {
             print("$i% ")
             delay(100L)  // todo 500L
         }
-        println("Ваш кофе готов: ${coffee.name}, сахар: ${coffee.sugar}, объем: ${coffee.volume}")
+        println("\nВаш кофе готов: ${coffee.name}, сахар: ${coffee.sugar}, объем: ${coffee.volume}".let {
+            if (coffee.components.isEmpty()) it else "$it, ${
+                coffee.components.map { entry -> "${entry.key}: ${entry.value}" }.joinToString()
+            }"
+        })
     }
 
     suspend fun SelectedMenu() {
-        val coffeeName = input("Выберите кофе (${coffeeAssortment.joinToString { it.name }}): ")
+        val coffeeName =
+            input("Выберите кофе (${Coffee.Latte.name}, ${Coffee.Americano.name}, ${Coffee.Cappuccino.name}): ")
         val sugar = inputInt("Количество сахара: ")
         val volume = inputFloat("Объем кофе: ")
-        coffeeAssortment[coffeeName](sugar, volume)
-        SelectMenu()
+        var coffee: Coffee? = null
+        while (coffee == null)
+            when (coffeeName) {
+                Coffee.Americano.name -> {
+                    coffee = Coffee.Americano(sugar, volume)
+                }
+
+                Coffee.Cappuccino.name -> {
+                    coffee = Coffee.Cappuccino(sugar, volume, inputFloat("Количество молока: "))
+                }
+
+                Coffee.Latte.name -> {
+                    coffee = Coffee.Latte(sugar, volume)
+                }
+            }
+        SelectMenu(coffee)
     }
 
     while (true)
